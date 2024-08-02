@@ -3,10 +3,13 @@ from apps.calificaciones.models import Inscription, SubjectInscription, TeacherS
 
 
 class InscriptionSerializer(serializers.ModelSerializer):
+    subjects = serializers.ListField(
+        child=serializers.PrimaryKeyRelatedField(queryset=Subject.objects.filter(is_active=True))
+    )
+
     class Meta:
         model = Inscription
-        fields = ('id','inscription_date', 'period')
-
+        fields = ('id', 'inscription_date', 'subjects', 'period')
 
 class SubjectInscriptionSerializer(serializers.ModelSerializer):
     class Meta:

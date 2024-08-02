@@ -23,7 +23,7 @@ class InscriptionView(generics.GenericAPIView, mixins.CreateModelMixin):
             serializer = self.serializer_class(data=request.data)
             if serializer.is_valid():
                 count_credits = 0
-                subject_ids = request.data.get('subject', [])
+                subject_ids = request.data.get('subjects', [])
                 if not subject_ids:
                     return Response({"error": "No llegaron materias para asociar"}, status=status.HTTP_400_BAD_REQUEST)
                 
@@ -196,8 +196,9 @@ class TeacherStudentsListView(generics.GenericAPIView, mixins.ListModelMixin):
             student_data = []
             for inscription in inscriptions:
                 student_data.append({
-                    'estudiante': f"{inscription.student.user.last_name} {inscription.student.user.first_name}",
+                    'estudiante': f"{inscription.student.user.last_name} {inscription.student.user.first_name} - {inscription.student.user.identification}",
                     'inscripción': inscription.id,
+                    'subject': inscription.subject.name
                 })
 
             return Response({"data": student_data}, status=status.HTTP_200_OK)
