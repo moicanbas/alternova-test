@@ -6,7 +6,10 @@ from .serializers import (PeriodSerializer, DepartmentsSerializer, StudentSerial
 from rest_framework import generics, mixins, permissions, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
 
 class BaseModelView(
     generics.GenericAPIView,

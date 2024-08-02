@@ -10,12 +10,12 @@ from .models import *
 from .serializers import *
 from apps.core.views import BaseModelView
 
+
 class UserAPIView(BaseModelView):
     model = CustomUser
     serializer_class = UserSerializer
-    
-    
-    
+
+
 class LoginView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         try:
